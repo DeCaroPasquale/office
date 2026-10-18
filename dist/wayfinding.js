@@ -1,0 +1,4 @@
+import {rooms} from './rooms.js';
+import {areas} from './data.js';
+
+export function floorMapSVG(){return `<svg class="office-map" viewBox="-41 -29 99 60" role="img" aria-label="Mappa dei nove ambienti dello Studio De Caro"><path d="M-38 -26H38V-14H54V26H-38Z" fill="#dce3de" stroke="#567488" stroke-width=".4"/>${rooms.map(r=>{const a=areas.find(a=>a.id===r.id),x=(r.x[0]+r.x[1])/2,z=(r.z[0]+r.z[1])/2;return `<g data-map-area="${r.id}" role="button" tabindex="0" aria-label="Visita ${a.name}"><rect x="${r.x[0]+.5}" y="${r.z[0]+.5}" width="${r.x[1]-r.x[0]-1}" height="${r.z[1]-r.z[0]-1}" rx="1" fill="${a.color}" stroke="#748b91" stroke-width=".25"/><text x="${x}" y="${z+1}" text-anchor="middle" font-family="Arial,sans-serif" font-size="3.2" fill="#19394c">${a.number}</text></g>`;}).join('')}<text x="7" y="-27.1" text-anchor="middle" font-family="Arial,sans-serif" font-size="1.9" fill="#536f7c">GOLFO DI NAPOLI</text></svg>`;}

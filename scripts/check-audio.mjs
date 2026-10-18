@@ -1,0 +1,6 @@
+import assert from 'node:assert/strict';
+import {createAudio} from '../dist/audio.js';
+let available=[{name:'Italiano A',lang:'it-IT',localService:true},{name:'Italiano B',lang:'it',localService:true},{name:'Italiano remoto',lang:'it-IT',localService:false},{name:'English',lang:'en-US',localService:true}];let last=null,cancelled=0;
+globalThis.window={speechSynthesis:{getVoices:()=>available,addEventListener(){},cancel(){cancelled++;},speak(u){last=u;u.onstart();}}};globalThis.document={addEventListener(){}};globalThis.SpeechSynthesisUtterance=class {constructor(text){this.text=text;}};
+const a=createAudio();assert.equal(a.voices.length,2);assert.equal(a.voiceOn,false);assert.equal(a.speak('Test',{index:0,gender:'f'}),false);assert.equal(a.setVoice(true),true);a.speak('Ciao',{index:1,gender:'m'});assert.equal(last.voice.name,'Italiano B');assert.equal(last.text,'Ciao');assert.notEqual(last.voice.localService,false);a.setVoice(false);assert.equal(a.voiceOn,false);assert.ok(cancelled>0);
+available=[{name:'Remote only',lang:'it-IT',localService:false}];const b=createAudio();assert.equal(b.setVoice(true),false);assert.equal(b.speak('Test',{index:0,gender:'f'}),false);console.log('PASS: speech opt-in, Italian local voices only, remote voices excluded, text fallback, cancellation.');

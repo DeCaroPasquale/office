@@ -1,0 +1,10 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const source=path.join(root,'dist'),output=path.join(root,'docs');
+await fs.access(path.join(source,'index.html'));
+await fs.mkdir(output,{recursive:true});
+await fs.cp(source,output,{recursive:true,force:true});
+await fs.writeFile(path.join(output,'.nojekyll'),'');
+console.log('Cartella docs pronta per GitHub Pages.');
