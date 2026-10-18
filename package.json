@@ -1,0 +1,13 @@
+{
+  "name": "de-caro-tower",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "scripts": {
+    "test": "node scripts/verifica-progetto.mjs",
+    "pages": "node scripts/prepara-github-pages.mjs"
+  }
+}
